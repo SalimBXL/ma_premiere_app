@@ -4,7 +4,6 @@ fn main() {
     let emoji = '😃';
     */
     let char_number = '7';
-    
 
     println!("{}", char_number.is_numeric());
 }
