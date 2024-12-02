@@ -1,25 +1,37 @@
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+use colored::*;
+
 fn main() {
-    match division(10, 2) {
-        None => println!("Erreur"),
-        Some(resultat) => println!("Resultat : {}", resultat)
-    }
+    println!("{}", "Guess the number!".yellow());
 
-    match enter_password("") {
-        None => println!("Password vide..."),
-        Some(pass) => println!("Mot de passe : {}", pass)
-    }
-}
+    let secret_number = rand::thread_rng().gen_range(1, 101);
+    println!("The secret number is: {}", secret_number);
 
-fn division(a: i32, b: i32) -> Option<i32> {
-    if b == 0 {
-        return None;
-    }
-    Some(a / b)
-}
+    loop {
+        println!("Please input your guess.");
 
-fn enter_password(pwd: &str) -> Option<&str> {
-    if pwd.is_empty() { 
-        return None;
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line.");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("You guessed: {}", guess);
+        
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("{}", "Too small!".red()),
+            Ordering::Greater => println!("{}", "Too big!".red()),
+            Ordering::Equal => {
+                println!("{}", "You win!".green());
+                break;
+            }
+        }
     }
-    Some(pwd)
 }

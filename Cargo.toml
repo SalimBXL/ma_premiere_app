@@ -1,6 +1,9 @@
 [package]
-name = "ma_premiere_app"
+name = "guessing_game"
 version = "0.1.0"
+authors = ["Salim Pasha"]
 edition = "2021"
 
 [dependencies]
+rand = "0.5.5"
+colored = "2.0.0"
